@@ -79,15 +79,3 @@ Displays the latest telemetry, instance inventory, health indicators, charts, an
 Socket.IO pushes updates from the backend to connected browser clients. The scheduler controls AWS collection, so each browser does not independently call AWS APIs.
 
 The scheduler interval controls how often the backend requests data. It does not force CloudWatch to publish new datapoints at that same frequency.
-
-## Current limitations
-
-- The telemetry cache is in process memory and is lost when the backend restarts.
-- A single-process scheduler is assumed. Multiple backend replicas require distributed coordination to avoid duplicate collection.
-- Historical metric persistence is not included in the current scope.
-- The current CloudWatch custom metric host mapping is configured for the monitored host and should be made dynamic before monitoring multiple instances.
-- Terraform provisioning is not yet implemented.
-
-## Design principle
-
-Treat missing, stale, or inaccessible metrics as unknown/degraded telemetry. Never convert unavailable metrics into zero utilization or silently present old datapoints as current.
