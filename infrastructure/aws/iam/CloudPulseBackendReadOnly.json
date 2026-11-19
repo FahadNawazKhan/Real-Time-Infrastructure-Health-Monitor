@@ -1,0 +1,23 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DescribeEC2Instances",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ReadCloudWatchMetricsAndAlarms",
+      "Effect": "Allow",
+      "Action": [
+        "cloudwatch:ListMetrics",
+        "cloudwatch:GetMetricData",
+        "cloudwatch:DescribeAlarms"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
