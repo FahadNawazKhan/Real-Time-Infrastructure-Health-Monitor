@@ -6,7 +6,7 @@ import InstanceTelemetry from './components/InstanceTelemetry.jsx';
 import AlarmsTable from './components/AlarmsTable.jsx';
 import { socket } from './socket.js';
 import { fetchTelemetry, triggerManualSync } from './api.js';
-import { AlertCircle, RefreshCw, Zap } from 'lucide-react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function App() {
   const [isSocketConnected, setIsSocketConnected] = useState(socket.connected);
@@ -198,10 +198,6 @@ export default function App() {
             <span className="font-semibold uppercase tracking-wider text-zinc-300">
               Live Telemetry Focus
             </span>
-            <span className="text-zinc-500 font-mono text-[11px] flex items-center gap-1">
-              <Zap className="w-3 h-3 text-emerald-400" />
-              Broadcasting via Socket.IO (10s scheduler cadence)
-            </span>
           </div>
 
           <InstanceTelemetry
@@ -247,7 +243,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="border-t border-zinc-900 bg-zinc-950 py-4 text-center text-xs text-zinc-600 font-mono">
-        CloudPulse &bull; Socket.IO Telemetry Broadcast &bull; AWS EC2 &amp; CloudWatch &bull; ap-south-1
+        CloudPulse &bull; AWS EC2 &amp; CloudWatch &bull; ap-south-1
       </footer>
     </div>
   );

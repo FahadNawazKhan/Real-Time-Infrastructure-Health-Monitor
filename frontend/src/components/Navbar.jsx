@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, RefreshCw, Radio, MapPin, Zap } from 'lucide-react';
+import { RefreshCw, Radio, MapPin } from 'lucide-react';
 
 export default function Navbar({
   isSocketConnected,
@@ -33,19 +33,9 @@ export default function Navbar({
     <header className="border-b border-zinc-800 bg-zinc-900/95 backdrop-blur px-4 sm:px-8 py-3 sticky top-0 z-30 flex flex-wrap items-center justify-between gap-3 text-xs">
       {/* Brand & Breadcrumb */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-md bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 shadow-sm">
-            <Activity className="w-4 h-4" />
-          </div>
-          <div>
-            <span className="font-semibold text-sm text-zinc-100 tracking-tight block leading-tight">
-              CloudPulse
-            </span>
-            <span className="text-[10px] text-zinc-500 font-mono hidden sm:block">
-              Real-Time WebSocket Stream
-            </span>
-          </div>
-        </div>
+        <span className="font-semibold text-sm text-zinc-100 tracking-tight block leading-tight">
+          CloudPulse
+        </span>
 
         <span className="text-zinc-700 hidden sm:inline">&bull;</span>
 
@@ -92,11 +82,6 @@ export default function Navbar({
           </div>
         )}
 
-        {/* Single Backend Scheduler Notification */}
-        <div className="hidden lg:flex items-center gap-1 px-2 py-1 rounded bg-zinc-800/50 text-zinc-400 border border-zinc-800 text-[11px]">
-          <Zap className="w-3 h-3 text-amber-400" />
-          <span>Single Backend Scheduler</span>
-        </div>
 
         {/* Manual Refresh Button */}
         <button

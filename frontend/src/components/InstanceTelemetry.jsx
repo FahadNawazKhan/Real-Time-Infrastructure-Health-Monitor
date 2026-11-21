@@ -10,7 +10,6 @@ import {
   Info,
   MapPin,
   Server,
-  Zap,
 } from 'lucide-react';
 import {
   AreaChart,
@@ -291,7 +290,7 @@ export default function InstanceTelemetry({
               Live CloudWatch Telemetry Progression
             </h4>
             <span className="text-[11px] text-zinc-500">
-              Streaming directly via backend WebSocket broadcast
+              Continuous telemetry trend
             </span>
           </div>
 
