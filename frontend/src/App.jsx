@@ -175,7 +175,7 @@ export default function App() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 space-y-6">
         {/* Offline / Reconnecting Warning Banner */}
         {errorMessage && (
-          <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg flex items-center justify-between text-xs text-rose-300">
+          <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-sm flex items-center justify-between text-xs text-rose-300">
             <div className="flex items-center gap-2.5">
               <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" />
               <span>{errorMessage}</span>

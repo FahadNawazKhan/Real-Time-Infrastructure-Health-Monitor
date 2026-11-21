@@ -31,7 +31,7 @@ export default function InstanceTelemetry({
 
   if (!instance) {
     return (
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-10 text-center text-zinc-500 text-xs flex flex-col items-center justify-center min-h-[260px]">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-10 text-center text-zinc-500 text-xs flex flex-col items-center justify-center min-h-[260px]">
         <Server className="w-8 h-8 text-zinc-700 mb-2" />
         <p className="font-medium text-zinc-400">No EC2 instance selected.</p>
         <span className="text-zinc-500 text-xs mt-1">
@@ -82,7 +82,7 @@ export default function InstanceTelemetry({
   };
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-5 space-y-5 min-w-0 overflow-hidden">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-5 space-y-5 min-w-0 overflow-hidden">
       {/* Node Header & SSH snippet */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
         <div>
@@ -90,24 +90,24 @@ export default function InstanceTelemetry({
             <span className="font-semibold text-base text-zinc-100">
               {instance.name || 'EC2 Instance'}
             </span>
-            <span className="font-mono text-xs text-zinc-400 bg-zinc-800/80 px-2 py-0.5 rounded border border-zinc-700/60">
+            <span className="font-mono text-xs text-zinc-400 bg-zinc-800/80 px-2 py-0.5 rounded-sm border border-zinc-700/60">
               {instance.instanceId}
             </span>
             <span
-              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono border ${
+              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm text-[11px] font-mono uppercase tracking-wide border ${
                 isRunning
-                  ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                  : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                  ? 'bg-zinc-950 text-emerald-400 border-emerald-900/60'
+                  : 'bg-zinc-950 text-rose-400 border-rose-900/60'
               }`}
             >
               <span
-                className={`w-1.5 h-1.5 rounded-full ${
-                  isRunning ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'
+                className={`w-1.5 h-1.5 rounded-sm ${
+                  isRunning ? 'bg-emerald-500' : 'bg-rose-500'
                 }`}
               />
               {instance.state}
             </span>
-            <span className="text-xs px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/60">
+            <span className="text-xs px-2 py-0.5 rounded-sm bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/60">
               {instance.instanceType}
             </span>
           </div>
@@ -131,7 +131,7 @@ export default function InstanceTelemetry({
         </div>
 
         {/* SSH Connect Snippet */}
-        <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-md px-3 py-1.5 text-xs font-mono self-start lg:self-auto max-w-full">
+        <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 rounded-sm px-3 py-1.5 text-xs font-mono self-start lg:self-auto max-w-full">
           <Terminal className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" />
           <span className="text-zinc-300 truncate">{sshCmd}</span>
           <button
@@ -151,14 +151,14 @@ export default function InstanceTelemetry({
       {/* 3 Metric Cards with Freshness Indicators */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* CPU */}
-        <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 flex flex-col justify-between">
+        <div className="bg-zinc-950 border border-zinc-800 rounded-sm p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-xs text-zinc-400">
               <span className="flex items-center gap-1.5 font-medium text-zinc-300">
                 <Cpu className="w-4 h-4 text-sky-400" />
                 CPU Utilization
               </span>
-              <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${cpuStatus.badgeColor}`}>
+              <span className={`text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm border ${cpuStatus.badgeColor}`}>
                 {cpuStatus.badge}
               </span>
             </div>
@@ -171,9 +171,9 @@ export default function InstanceTelemetry({
           </div>
 
           <div className="mt-4">
-            <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+            <div className="w-full bg-zinc-800 rounded-sm h-1.5 overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-300 ${cpuStatus.bar}`}
+                className={`h-full rounded-sm transition-all duration-300 ${cpuStatus.bar}`}
                 style={{ width: `${Math.min(cpuVal || 0, 100)}%` }}
               />
             </div>
@@ -191,14 +191,14 @@ export default function InstanceTelemetry({
         </div>
 
         {/* Memory */}
-        <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 flex flex-col justify-between">
+        <div className="bg-zinc-950 border border-zinc-800 rounded-sm p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-xs text-zinc-400">
               <span className="flex items-center gap-1.5 font-medium text-zinc-300">
                 <Database className="w-4 h-4 text-emerald-400" />
                 Memory Used
               </span>
-              <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${memStatus.badgeColor}`}>
+              <span className={`text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm border ${memStatus.badgeColor}`}>
                 {memStatus.badge}
               </span>
             </div>
@@ -211,9 +211,9 @@ export default function InstanceTelemetry({
           </div>
 
           <div className="mt-4">
-            <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+            <div className="w-full bg-zinc-800 rounded-sm h-1.5 overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-300 ${memStatus.bar}`}
+                className={`h-full rounded-sm transition-all duration-300 ${memStatus.bar}`}
                 style={{ width: `${Math.min(memVal || 0, 100)}%` }}
               />
             </div>
@@ -231,14 +231,14 @@ export default function InstanceTelemetry({
         </div>
 
         {/* Disk */}
-        <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 flex flex-col justify-between">
+        <div className="bg-zinc-950 border border-zinc-800 rounded-sm p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-xs text-zinc-400">
               <span className="flex items-center gap-1.5 font-medium text-zinc-300">
                 <HardDrive className="w-4 h-4 text-amber-400" />
                 Disk Used (/)
               </span>
-              <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${diskStatus.badgeColor}`}>
+              <span className={`text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm border ${diskStatus.badgeColor}`}>
                 {diskStatus.badge}
               </span>
             </div>
@@ -251,9 +251,9 @@ export default function InstanceTelemetry({
           </div>
 
           <div className="mt-4">
-            <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+            <div className="w-full bg-zinc-800 rounded-sm h-1.5 overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-300 ${diskStatus.bar}`}
+                className={`h-full rounded-sm transition-all duration-300 ${diskStatus.bar}`}
                 style={{ width: `${Math.min(diskVal || 0, 100)}%` }}
               />
             </div>
@@ -273,17 +273,17 @@ export default function InstanceTelemetry({
 
       {/* CloudWatch Agent notice if memory or disk are null */}
       {(memVal === null || diskVal === null) && (
-        <div className="flex items-start gap-2.5 p-3 bg-zinc-950 border border-zinc-800 rounded-md text-xs text-zinc-400 leading-relaxed">
+        <div className="flex items-start gap-2.5 p-3 bg-zinc-950 border border-zinc-800 rounded-sm text-xs text-zinc-400 leading-relaxed">
           <Info className="w-4 h-4 text-zinc-500 flex-shrink-0 mt-0.5" />
           <div>
             <span className="text-zinc-200 font-medium">CloudWatch Agent Telemetry: </span>
-            Memory and Disk metrics require the Amazon CloudWatch Agent active on host reporting to the <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded">CloudPulse</code> namespace. If empty, ensure the agent daemon is publishing metrics for host <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded">CLOUDWATCH_HOST</code>.
+            Memory and Disk metrics require the Amazon CloudWatch Agent active on host reporting to the <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded-sm">CloudPulse</code> namespace. If empty, ensure the agent daemon is publishing metrics for host <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded-sm">CLOUDWATCH_HOST</code>.
           </div>
         </div>
       )}
 
       {/* Time-Series Chart */}
-      <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 min-w-0">
+      <div className="bg-zinc-950 border border-zinc-800 rounded-sm p-4 min-w-0">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div>
             <h4 className="text-xs font-semibold text-zinc-200">
@@ -296,15 +296,15 @@ export default function InstanceTelemetry({
 
           <div className="flex items-center gap-4 text-xs font-mono">
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-sky-400" />
+              <span className="w-2 h-2 rounded-sm bg-sky-400" />
               <span className="text-zinc-400">CPU %</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              <span className="w-2 h-2 rounded-sm bg-emerald-400" />
               <span className="text-zinc-400">RAM %</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+              <span className="w-2 h-2 rounded-sm bg-amber-400" />
               <span className="text-zinc-400">Disk %</span>
             </div>
           </div>

@@ -28,7 +28,7 @@ export default function AlarmsTable({ alarms = [] }) {
   };
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-lg flex flex-col min-w-0 overflow-hidden text-xs">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-sm flex flex-col min-w-0 overflow-hidden text-xs">
       {/* Header */}
       <div className="p-4 border-b border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
@@ -36,18 +36,18 @@ export default function AlarmsTable({ alarms = [] }) {
           <h3 className="font-semibold text-sm text-zinc-100">
             CloudWatch Metric Alarms
           </h3>
-          <span className="px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs border border-zinc-700/60">
+          <span className="px-1.5 py-0.5 rounded-sm bg-zinc-800 text-zinc-400 font-mono text-xs border border-zinc-700/60">
             {alarms.length} Alarms Configured
           </span>
         </div>
 
         {/* State Filter Tabs */}
-        <div className="flex items-center bg-zinc-950 border border-zinc-800 rounded-md p-0.5 text-xs">
+        <div className="flex items-center bg-zinc-950 border border-zinc-800 rounded-sm p-0.5 text-xs">
           <button
             onClick={() => setFilterState('ALL')}
-            className={`px-2.5 py-1 rounded transition text-xs ${
+            className={`px-2.5 py-1 rounded-sm transition text-xs ${
               filterState === 'ALL'
-                ? 'bg-zinc-800 text-zinc-100 font-medium shadow-sm'
+                ? 'bg-zinc-800 text-zinc-100 font-medium'
                 : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
@@ -55,9 +55,9 @@ export default function AlarmsTable({ alarms = [] }) {
           </button>
           <button
             onClick={() => setFilterState('ALARM')}
-            className={`px-2.5 py-1 rounded transition text-xs ${
+            className={`px-2.5 py-1 rounded-sm transition text-xs ${
               filterState === 'ALARM'
-                ? 'bg-zinc-800 text-rose-300 font-medium shadow-sm'
+                ? 'bg-zinc-800 text-rose-300 font-medium'
                 : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
@@ -65,9 +65,9 @@ export default function AlarmsTable({ alarms = [] }) {
           </button>
           <button
             onClick={() => setFilterState('OK')}
-            className={`px-2.5 py-1 rounded transition text-xs ${
+            className={`px-2.5 py-1 rounded-sm transition text-xs ${
               filterState === 'OK'
-                ? 'bg-zinc-800 text-emerald-300 font-medium shadow-sm'
+                ? 'bg-zinc-800 text-emerald-300 font-medium'
                 : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
@@ -108,12 +108,12 @@ export default function AlarmsTable({ alarms = [] }) {
                     {/* State Badge */}
                     <td className="py-3 px-4 whitespace-nowrap">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-medium border ${
+                        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm text-[11px] font-mono font-semibold uppercase tracking-wider border ${
                           isAlarm
-                            ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+                            ? 'bg-zinc-950 text-rose-400 border-rose-900/60'
                             : isOk
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                            : 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                            ? 'bg-zinc-950 text-emerald-400 border-emerald-900/60'
+                            : 'bg-zinc-950 text-zinc-400 border-zinc-800'
                         }`}
                       >
                         {isAlarm ? (

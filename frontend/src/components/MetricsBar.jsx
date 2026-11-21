@@ -25,7 +25,7 @@ export default function MetricsBar({ instances = [], alarms = [], health }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* 1. Health Evaluation Score */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex items-center justify-between shadow-sm">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-4 flex items-center justify-between shadow-sm">
         <div>
           <span className="text-zinc-400 text-xs font-medium block">
             Health Evaluation
@@ -42,13 +42,13 @@ export default function MetricsBar({ instances = [], alarms = [], health }) {
             {health?.summary || 'System evaluation active'}
           </span>
         </div>
-        <div className={`w-10 h-10 rounded-md border flex items-center justify-center ${healthTheme.bg}`}>
+        <div className={`w-9 h-9 rounded-sm border flex items-center justify-center ${healthTheme.bg}`}>
           <HeartPulse className={`w-5 h-5 ${healthTheme.icon}`} />
         </div>
       </div>
 
       {/* 2. Total Compute Instances */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex items-center justify-between shadow-sm">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-4 flex items-center justify-between shadow-sm">
         <div>
           <span className="text-zinc-400 text-xs font-medium block">
             EC2 Discovered
@@ -60,13 +60,13 @@ export default function MetricsBar({ instances = [], alarms = [], health }) {
             Discovered in ap-south-1
           </span>
         </div>
-        <div className="w-10 h-10 rounded-md bg-zinc-800/80 border border-zinc-700/60 flex items-center justify-center text-zinc-400">
+        <div className="w-9 h-9 rounded-sm bg-zinc-800/80 border border-zinc-700/60 flex items-center justify-center text-zinc-400">
           <Server className="w-5 h-5" />
         </div>
       </div>
 
       {/* 3. Running Fleet Capacity */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex items-center justify-between shadow-sm">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-4 flex items-center justify-between shadow-sm">
         <div>
           <span className="text-zinc-400 text-xs font-medium block">
             Running Fleet
@@ -83,13 +83,13 @@ export default function MetricsBar({ instances = [], alarms = [], health }) {
             {total > 0 ? Math.round((running / total) * 100) : 0}% fleet operational
           </span>
         </div>
-        <div className="w-10 h-10 rounded-md bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+        <div className="w-9 h-9 rounded-sm bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
           <Activity className="w-5 h-5" />
         </div>
       </div>
 
       {/* 4. Active Alarms */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex items-center justify-between shadow-sm">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-4 flex items-center justify-between shadow-sm">
         <div>
           <span className="text-zinc-400 text-xs font-medium block">
             CloudWatch Alarms
@@ -105,7 +105,7 @@ export default function MetricsBar({ instances = [], alarms = [], health }) {
             {inAlarm > 0 ? 'Breaching thresholds' : `${alarms.length} rules monitored (All OK)`}
           </span>
         </div>
-        <div className={`w-10 h-10 rounded-md border flex items-center justify-center ${
+        <div className={`w-9 h-9 rounded-sm border flex items-center justify-center ${
           inAlarm > 0
             ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
             : 'bg-zinc-800/80 border-zinc-700/60 text-zinc-400'

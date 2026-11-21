@@ -36,7 +36,7 @@ export default function InstanceTable({
   ).length;
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-lg flex flex-col min-w-0 overflow-hidden">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-sm flex flex-col min-w-0 overflow-hidden">
       {/* Header & Filter Controls */}
       <div className="p-4 border-b border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
@@ -44,7 +44,7 @@ export default function InstanceTable({
           <h3 className="font-semibold text-sm text-zinc-100">
             EC2 Instance Fleet
           </h3>
-          <span className="px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs border border-zinc-700/60">
+          <span className="px-1.5 py-0.5 rounded-sm bg-zinc-800 text-zinc-400 font-mono text-xs border border-zinc-700/60">
             {filtered.length} of {instances.length}
           </span>
         </div>
@@ -58,17 +58,17 @@ export default function InstanceTable({
               placeholder="Search name, ID, IP..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-zinc-950 border border-zinc-800 rounded-md pl-8 pr-3 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-zinc-600 w-48 sm:w-56"
+              className="bg-zinc-950 border border-zinc-800 rounded-sm pl-8 pr-3 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-zinc-600 w-48 sm:w-56"
             />
           </div>
 
           {/* State Tabs */}
-          <div className="flex items-center bg-zinc-950 border border-zinc-800 rounded-md p-0.5 text-xs">
+          <div className="flex items-center bg-zinc-950 border border-zinc-800 rounded-sm p-0.5 text-xs">
             <button
               onClick={() => setFilterState('ALL')}
-              className={`px-2.5 py-1 rounded transition text-xs ${
+              className={`px-2.5 py-1 rounded-sm transition text-xs ${
                 filterState === 'ALL'
-                  ? 'bg-zinc-800 text-zinc-100 font-medium shadow-sm'
+                  ? 'bg-zinc-800 text-zinc-100 font-medium'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -76,9 +76,9 @@ export default function InstanceTable({
             </button>
             <button
               onClick={() => setFilterState('RUNNING')}
-              className={`px-2.5 py-1 rounded transition text-xs ${
+              className={`px-2.5 py-1 rounded-sm transition text-xs ${
                 filterState === 'RUNNING'
-                  ? 'bg-zinc-800 text-emerald-400 font-medium shadow-sm'
+                  ? 'bg-zinc-800 text-emerald-400 font-medium'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -86,9 +86,9 @@ export default function InstanceTable({
             </button>
             <button
               onClick={() => setFilterState('STOPPED')}
-              className={`px-2.5 py-1 rounded transition text-xs ${
+              className={`px-2.5 py-1 rounded-sm transition text-xs ${
                 filterState === 'STOPPED'
-                  ? 'bg-zinc-800 text-rose-400 font-medium shadow-sm'
+                  ? 'bg-zinc-800 text-rose-400 font-medium'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -141,15 +141,15 @@ export default function InstanceTable({
                     {/* State */}
                     <td className="py-3 px-4 whitespace-nowrap">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono border ${
+                        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm text-[11px] font-mono uppercase tracking-wide border ${
                           isRunning
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                            : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                            ? 'bg-zinc-950 text-emerald-400 border-emerald-900/60'
+                            : 'bg-zinc-950 text-rose-400 border-rose-900/60'
                         }`}
                       >
                         <span
-                          className={`w-1.5 h-1.5 rounded-full ${
-                            isRunning ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'
+                          className={`w-1.5 h-1.5 rounded-sm ${
+                            isRunning ? 'bg-emerald-500' : 'bg-rose-500'
                           }`}
                         />
                         {inst.state}
@@ -181,7 +181,7 @@ export default function InstanceTable({
 
                     {/* Type */}
                     <td className="py-3 px-4 font-mono text-zinc-400 whitespace-nowrap">
-                      <span className="bg-zinc-800/80 px-2 py-0.5 rounded border border-zinc-700/60 text-[11px]">
+                      <span className="bg-zinc-800/80 px-2 py-0.5 rounded-sm border border-zinc-700/60 text-[11px]">
                         {inst.instanceType || '—'}
                       </span>
                     </td>
