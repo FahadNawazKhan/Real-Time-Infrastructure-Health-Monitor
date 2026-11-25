@@ -277,7 +277,7 @@ export default function InstanceTelemetry({
           <Info className="w-4 h-4 text-zinc-500 flex-shrink-0 mt-0.5" />
           <div>
             <span className="text-zinc-200 font-medium">CloudWatch Agent Telemetry: </span>
-            Memory and Disk metrics require the Amazon CloudWatch Agent active on host reporting to the <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded-sm">CloudPulse</code> namespace. If empty, ensure the agent daemon is publishing metrics for host <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded-sm">CLOUDWATCH_HOST</code>.
+            Memory and Disk metrics require the Amazon CloudWatch Agent active on host reporting to the <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded-sm">CloudPulse</code> namespace with the <code className="text-zinc-200 bg-zinc-800 px-1 py-0.5 rounded-sm">InstanceId</code> dimension.
           </div>
         </div>
       )}

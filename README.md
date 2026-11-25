@@ -86,9 +86,9 @@ Real-Time-Infrastructure-Health-Monitor/
 │   │   ├── instanceRoutes.js    # EC2 instances route & fetchInstancesData() helper
 │   │   └── metricsRoutes.js     # Instance metrics REST route (/api/metrics/:instanceId)
 │   ├── services/
-│   │   ├── cloudwatchService.js # GetMetricData queries (CPU, RAM, Disk) & lag calculation
+│   │   ├── cloudwatchService.js # Direct GetMetricData queries (CPU, RAM, Disk) via InstanceId
 │   │   └── schedulerService.js  # Central scheduler, health evaluation, Socket.IO broadcast
-│   ├── .env                     # Local environment config (PORT, AWS_REGION, CLOUDWATCH_HOST)
+│   ├── .env                     # Local environment config (PORT, AWS_REGION)
 │   ├── package.json             # Backend dependencies (express, socket.io, @aws-sdk/...)
 │   └── server.js                # HTTP + Socket.IO server entrypoint (Port 5000)
 │
@@ -190,6 +190,9 @@ To collect OS-level **Memory** and **Disk** metrics on your EC2 instances, ensur
 {
   "metrics": {
     "namespace": "CloudPulse",
+    "append_dimensions": {
+      "InstanceId": "${aws:InstanceId}"
+    },
     "metrics_collected": {
       "mem": {
         "measurement": ["mem_used_percent"],
@@ -200,9 +203,6 @@ To collect OS-level **Memory** and **Disk** metrics on your EC2 instances, ensur
         "resources": ["/"],
         "metrics_collection_interval": 60
       }
-    },
-    "append_dimensions": {
-      "host": "${aws:InstanceId}"
     }
   }
 }
@@ -217,8 +217,8 @@ Edit `backend/.env`:
 ```env
 PORT=5000
 AWS_REGION=ap-south-1
-CLOUDWATCH_HOST=ip-172-31-1-242
 ```
+*(AWS credentials are automatically loaded from your standard `~/.aws/credentials` or IAM role).*
 
 ### 2. Start Backend (Socket.IO + Scheduler)
 ```bash

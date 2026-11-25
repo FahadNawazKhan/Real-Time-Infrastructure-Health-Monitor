@@ -5,6 +5,9 @@
   },
   "metrics": {
     "namespace": "CloudPulse",
+    "append_dimensions": {
+      "InstanceId": "${aws:InstanceId}"
+    },
     "metrics_collected": {
       "mem": {
         "measurement": [
@@ -14,7 +17,7 @@
       },
       "disk": {
         "measurement": [
-          "used_percent"
+          "disk_used_percent"
         ],
         "resources": [
           "/"

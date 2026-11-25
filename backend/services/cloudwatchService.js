@@ -1,136 +1,60 @@
 import { GetMetricDataCommand } from "@aws-sdk/client-cloudwatch";
 import { cloudwatchClient } from "../config/aws.js";
 
+// Helper to construct a metric query object
+const query = (Id, Namespace, MetricName, Dimensions) => ({
+  Id,
+  MetricStat: {
+    Metric: { Namespace, MetricName, Dimensions },
+    Period: 60,
+    Stat: "Average",
+  },
+  ReturnData: true,
+});
+
+// Helper to format the latest metric data point
+const format = (results, id, freshSec = 300) => {
+  const match = results?.find((r) => r.Id === id);
+  if (!match?.Values?.length) return null;
+
+  const timestamp = match.Timestamps[0];
+  const ageSeconds = Math.round((Date.now() - new Date(timestamp).getTime()) / 1000);
+
+  return {
+    value: Number(match.Values[0].toFixed(1)),
+    timestamp,
+    ageSeconds,
+    isFresh: ageSeconds <= freshSec,
+  };
+};
+
 export const getInstanceMetrics = async (instanceId) => {
-  const host = process.env.CLOUDWATCH_HOST;
-
-  const endTime = new Date();
-  const startTime = new Date(endTime.getTime() - 10 * 60 * 1000); // 10 min window for CloudWatch reporting lag
-
-  const metricQueries = [
-    {
-      Id: "cpu",
-      MetricStat: {
-        Metric: {
-          Namespace: "AWS/EC2",
-          MetricName: "CPUUtilization",
-          Dimensions: [
-            {
-              Name: "InstanceId",
-              Value: instanceId,
-            },
-          ],
-        },
-        Period: 60,
-        Stat: "Average",
-      },
-      ReturnData: true,
-    },
-  ];
-
-  if (host) {
-    metricQueries.push(
-      {
-        Id: "memory",
-        MetricStat: {
-          Metric: {
-            Namespace: "CloudPulse",
-            MetricName: "mem_used_percent",
-            Dimensions: [
-              {
-                Name: "host",
-                Value: host,
-              },
-            ],
-          },
-          Period: 60,
-          Stat: "Average",
-        },
-        ReturnData: true,
-      },
-      {
-        Id: "disk",
-        MetricStat: {
-          Metric: {
-            Namespace: "CloudPulse",
-            MetricName: "disk_used_percent",
-            Dimensions: [
-              {
-                Name: "path",
-                Value: "/",
-              },
-              {
-                Name: "host",
-                Value: host,
-              },
-              {
-                Name: "device",
-                Value: "nvme0n1p1",
-              },
-              {
-                Name: "fstype",
-                Value: "ext4",
-              },
-            ],
-          },
-          Period: 60,
-          Stat: "Average",
-        },
-        ReturnData: true,
-      }
-    );
-  }
-
   try {
-    const command = new GetMetricDataCommand({
-      StartTime: startTime,
-      EndTime: endTime,
-      MetricDataQueries: metricQueries,
-      ScanBy: "TimestampDescending",
-    });
-
-    const response = await cloudwatchClient.send(command);
-
-    const getLatestValue = (metricId) => {
-      const result = response.MetricDataResults?.find(
-        (item) => item.Id === metricId
-      );
-
-      if (!result || !result.Values?.length) {
-        return null;
-      }
-
-      const latestIndex = result.Timestamps.reduce(
-        (latest, timestamp, index, timestamps) =>
-          timestamp > timestamps[latest] ? index : latest,
-        0
-      );
-
-      const timestamp = result.Timestamps[latestIndex];
-      const ageSeconds = Math.round(
-        (Date.now() - new Date(timestamp).getTime()) / 1000
-      );
-
-      return {
-        value: result.Values[latestIndex],
-        timestamp,
-        ageSeconds,
-        isFresh: ageSeconds <= 300, // Considered fresh if within 5 minutes (due to CloudWatch pipeline lag)
-      };
-    };
+    const { MetricDataResults = [] } = await cloudwatchClient.send(
+      new GetMetricDataCommand({
+        StartTime: new Date(Date.now() - 15 * 60 * 1000), // 15 min window
+        EndTime: new Date(),
+        ScanBy: "TimestampDescending",
+        MetricDataQueries: [
+          query("cpu", "AWS/EC2", "CPUUtilization", [{ Name: "InstanceId", Value: instanceId }]),
+          query("memory", "CloudPulse", "mem_used_percent", [{ Name: "InstanceId", Value: instanceId }]),
+          query("disk", "CloudPulse", "disk_used_percent", [
+            { Name: "path", Value: "/" },
+            { Name: "InstanceId", Value: instanceId },
+            { Name: "device", Value: "nvme0n1p1" },
+            { Name: "fstype", Value: "ext4" },
+          ]),
+        ],
+      })
+    );
 
     return {
-      cpu: getLatestValue("cpu"),
-      memory: getLatestValue("memory"),
-      disk: getLatestValue("disk"),
+      cpu: format(MetricDataResults, "cpu", 600),
+      memory: format(MetricDataResults, "memory"),
+      disk: format(MetricDataResults, "disk"),
     };
-  } catch (error) {
-    console.error(`CloudWatch metric query failed for instance ${instanceId}:`, error.message);
-    return {
-      cpu: null,
-      memory: null,
-      disk: null,
-      error: error.message,
-    };
+  } catch (err) {
+    console.error(`Metric query failed for ${instanceId}:`, err.message);
+    return { cpu: null, memory: null, disk: null, error: err.message };
   }
 };

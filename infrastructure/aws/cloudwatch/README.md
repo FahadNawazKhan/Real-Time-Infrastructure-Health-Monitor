@@ -7,16 +7,14 @@ CloudPulse reads standard EC2 CPU metrics and custom memory/disk metrics publish
 | Metric | Namespace | Metric name | Dimensions |
 |---|---|---|---|
 | CPU | `AWS/EC2` | `CPUUtilization` | `InstanceId` |
-| Memory | `CloudPulse` | `mem_used_percent` | `host` |
-| Disk | `CloudPulse` | `disk_used_percent` | `path`, `host`, `device`, `fstype` |
+| Memory | `CloudPulse` | `mem_used_percent` | `InstanceId` |
+| Disk | `CloudPulse` | `disk_used_percent` | `path`, `InstanceId`, `device`, `fstype` |
 
 The custom namespace is `CloudPulse`.
 
 ## CloudWatch Agent
 
-The agent configuration is stored in `agent-config.json`. It publishes memory and root filesystem disk utilization every 60 seconds.
-
-The `host` dimension for the configured instance was `ip-172-31-1-242`. The backend currently resolves this through its environment configuration. If the monitored host changes, update the backend's host-to-instance mapping rather than assuming every EC2 instance shares the same hostname.
+The agent configuration is stored in `agent-config.json`. It publishes memory and root filesystem disk utilization every 60 seconds with `append_dimensions: { "InstanceId": "${aws:InstanceId}" }`. The backend resolves telemetry dynamically per instance without requiring manual host configurations.
 
 ## Verify metrics
 

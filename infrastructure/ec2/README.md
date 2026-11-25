@@ -12,7 +12,7 @@ CloudPulse was configured to monitor an Ubuntu EC2 instance in `ap-south-1`. The
 - Instance ID: `i-08839d160f252a97a` (historical reference; do not assume it is still running)
 - CloudWatch Agent custom metric namespace: `CloudPulse`
 
-The original CloudWatch Agent host dimension was `ip-172-31-1-242`. A replacement instance will normally have a different private hostname, so update the backend's configured host dimension or host-to-instance mapping.
+CloudWatch Agent metrics (Memory & Disk) are dimensioned directly by `InstanceId` via AWS standard `append_dimensions: { "InstanceId": "${aws:InstanceId}" }`. The backend resolves telemetry dynamically per-instance, so manual host mappings or environment variables are not required.
 
 ## Connect to an existing Ubuntu instance
 
